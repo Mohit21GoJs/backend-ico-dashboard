@@ -69,7 +69,7 @@ export class VerificationClient implements VerificationClientInterface {
         method: 'POST',
         body: data
       });
-
+      console.log('data is ', JSON.stringify(data));
       result.method = method;
 
       return result;
