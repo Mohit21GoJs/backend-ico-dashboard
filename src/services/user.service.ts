@@ -64,6 +64,7 @@ export class UserService implements UserServiceInterface {
    */
   async create(userData: InputUserData): Promise<CreatedUserData> {
     const email = userData.email.toLowerCase();
+    console.log('create user with', email);
     const existingUser = await getConnection().getMongoRepository(Investor).findOne({
       email: email
     });
@@ -116,6 +117,18 @@ export class UserService implements UserServiceInterface {
         scope: ACTIVATE_USER_SCOPE
       }
     });
+
+    // const template = await this.emailTemplateService.getRenderedTemplate('init-signup', { name: `${userData.firstName} ${userData.lastName}`, link: link });
+
+    // if (template !== '') {
+    //   console.log('send mail');
+    //   this.emailQueue.addJob({
+    //     sender: config.email.from.general,
+    //     subject: `Verify your email at ${config.app.companyName}`,
+    //     recipient: email,
+    //     text: template
+    //   });
+    // }
 
     userData.passwordHash = bcrypt.hashSync(userData.password);
     const investor = Investor.createInvestor(userData, {

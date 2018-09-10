@@ -29,6 +29,7 @@ export class EmailQueue implements EmailQueueInterface {
   }
 
   private async process(job: Bull.Job): Promise<boolean> {
+    console.log('email service', JSON.stringify(job.data));
     await this.emailService.send(
       job.data.sender,
       job.data.recipient,
